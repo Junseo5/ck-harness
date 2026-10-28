@@ -27,7 +27,10 @@ case "$TOOL" in
       echo "[ck] 역할 파일에 ''' 가 있으면 TOML 문자열이 깨집니다: $FILE" >&2
       exit 1
     fi
-    exec codex -c "developer_instructions='''${TEXT}'''" "$@"
+    # 비대화형(exec)에서는 -c가 하위 명령 뒤에 와야 적용된다: bin/dev exec "..."
+    SUB=()
+    if [ "${1:-}" = "exec" ] || [ "${1:-}" = "e" ]; then SUB=("$1"); shift; fi
+    exec codex ${SUB[@]+"${SUB[@]}"} -c "developer_instructions='''${TEXT}'''" "$@"
     ;;
   claude)
     exec claude --append-system-prompt "$TEXT" "$@"

@@ -9,7 +9,7 @@
 | 0:03 | 터미널 1 `bin/dev` → `/model` · `/status`, 터미널 2 `bin/analyst` | |
 | 0:05 | analyst: `$intake-interview` / dev: explorer로 데이터 점검 / 나: 담당자 첫 질문 | |
 | 0:20 | 담당자 답을 analyst에 붙여 넣기 → COLLAB·명확도 갱신 | |
-| 0:30 | analyst: `$plan-gate` → 내가 PLAN 승인 | 범위 합의 |
+| 0:30 | analyst: `$plan-gate` → **analyst 세션에** 승인(바꿀 점 포함) → DECISIONS 기록·커밋 | 범위 합의 |
 | 0:40 | dev: `$slice-implement` 1단계(기본판) | |
 | 1:30 | 터미널 2: analyst 종료(`/quit`) → `bin/reviewer` → `$verify-loop` | 기본판 동작 |
 | 1:30~2:20 | 단계 진행 + 숨은 요구 확인 + FAIL 수정 | |
@@ -23,6 +23,7 @@
 - 동시에 열린 Codex는 최대 2개. 읽기 작업은 dev 안에서 "explorer 서브에이전트로 ○○ 요약해줘"
 - reviewer 지적은 dev에 붙여 넣는다 (dev는 검토 후 반영·반박)
 - 나: Codex가 일하는 동안 담당자 문답, 결정 승인
+- AI 제안을 내가 바꾸면 analyst에 "DECISIONS에 기록: <AI 제안> → <바꾼 내용>, 이유 <한 줄>"
 - 역할 확인: 세션 첫 질문 "너의 역할과 쓸 수 있는 폴더를 한 줄로"
 
 ## 사전 체험 확인 (1분)
@@ -30,6 +31,7 @@
 - `bin/dev` 실행 → 역할 확인 질문에 dev라고 답하는지
 - 터미널 2개 동시 실행 시 RAM 표시
 - 처음 실행할 때 폴더 신뢰 여부를 물으면 허용 (`.codex/config.toml` 적용 조건)
+- Codex가 `git commit` 승인을 요청하면 허용한다. 샌드박스가 `.git` 쓰기를 막으면 커밋이 조용히 실패할 수 있으니 `git log`로 확인
 
 ## 프롬프트 카드
 1. **데이터 확인**: "데이터 파일마다 행 수, 컬럼, 결측·중복·이상값, 샘플 2개만 요약해줘. 파일 수정 금지."
