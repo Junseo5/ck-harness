@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# dev 역할로 Codex 실행
-exec bash "$(dirname "${BASH_SOURCE[0]}")/../scripts/codex-role.sh" dev "$@"

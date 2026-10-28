@@ -1,6 +1,6 @@
 ---
 name: intake-interview
-description: 과제 시작 직후 과제 문서와 제공 데이터를 빠르게 파악하고, 업무 담당자에게 물을 질문 사다리를 만든다. 담당자 답변은 docs/COLLAB.md에 기록한다.
+description: 과제 시작 직후 과제 문서와 제공 데이터를 빠르게 파악하고, 요구를 주는 사람(담당자·출제자·멘토)에게 물을 질문 사다리를 만든다. 답변은 docs/COLLAB.md에 기록한다.
 ---
 
 # intake-interview

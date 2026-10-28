@@ -19,6 +19,7 @@ ver node    node --version
 ver npm     npm --version
 ver git     git --version
 ver codex   codex --version
+ver claude  claude --version
 ver curl    curl --version
 
 echo "[preflight] OpenAI 환경 변수 (값은 출력하지 않음)"
