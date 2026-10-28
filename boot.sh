@@ -45,8 +45,10 @@ fi
 # 2. Codex 설정·스킬·스크립트
 copy_tree "$SRC/.codex"   "$DEST/.codex"
 copy_tree "$SRC/.agents"  "$DEST/.agents"
+copy_tree "$SRC/roles"    "$DEST/.codex/roles"
 copy_tree "$SRC/scripts"  "$DEST/scripts"
-chmod +x "$DEST"/scripts/*.sh 2>/dev/null || true
+copy_tree "$SRC/bin"      "$DEST/bin"
+chmod +x "$DEST"/scripts/*.sh "$DEST"/bin/* 2>/dev/null || true
 
 # 3. 문서 템플릿과 검증 뼈대
 copy_tree "$SRC/templates/docs"   "$DEST/docs"
@@ -62,7 +64,7 @@ cat > docs/HARNESS.md <<EOF
 - 저장소: $URL
 - 커밋: $REV
 - 설치 시각: $(date '+%Y-%m-%d %H:%M:%S %Z')
-- 내용: 작업 규칙(AGENTS.md), Skill 7종, 커스텀 에이전트 2종, 문서 템플릿, 점검 스크립트, 빈 검증 뼈대
+- 내용: 공통 규칙(AGENTS.md), 역할 지시문 3종(dev·analyst·reviewer), Skill 7종, 읽기 전용 서브에이전트 1종, 문서 템플릿, 점검 스크립트, 빈 검증 뼈대
 - 과제 해답·도메인 로직·앱 코드는 포함하지 않음
 EOF
 
@@ -78,7 +80,7 @@ fi
 git config user.name  >/dev/null 2>&1 || git config user.name  "candidate"
 git config user.email >/dev/null 2>&1 || git config user.email "candidate@localhost"
 
-PATHS=(AGENTS.md .codex .agents scripts docs verify)
+PATHS=(AGENTS.md .codex .agents scripts bin docs verify)
 git add -- "${PATHS[@]}" 2>/dev/null || true
 if git diff --cached --quiet; then
   echo "[ck] 커밋할 변경이 없습니다."
@@ -96,4 +98,6 @@ fi
 bash scripts/preflight.sh || true
 
 echo
-echo "[ck] 설치 끝. 다음: codex 실행 → /model, /status 확인 → \$intake-interview"
+echo "[ck] 설치 끝."
+echo "  터미널 1: bin/dev       → /model, /status 확인"
+echo "  터미널 2: bin/analyst   → \$intake-interview  (1:30 이후 종료하고 bin/reviewer)"

@@ -5,22 +5,31 @@
 ## 시간표 (과제 시작 = 0:00, 실제 10:00 전후)
 | 경과 | 할 일 | 기준점 |
 |---|---|---|
-| 0:00 | 신분증·안경 확인, clone + boot, `codex` → `/model` · `/status` | |
-| 0:05 | `$intake-interview` / 그동안 담당자에게 첫 질문 | |
-| 0:20 | 질문 사다리 진행, COLLAB 기록 | |
-| 0:30 | `$plan-gate` → PLAN 승인 | 범위 합의 |
-| 0:40 | `$slice-implement` 1단계(기본판) | |
-| 1:30 | 터미널 2에서 검증 세션 `$verify-loop` | 기본판 동작 |
+| 0:00 | 신분증·안경 확인, clone + boot | |
+| 0:03 | 터미널 1 `bin/dev` → `/model` · `/status`, 터미널 2 `bin/analyst` | |
+| 0:05 | analyst: `$intake-interview` / dev: explorer로 데이터 점검 / 나: 담당자 첫 질문 | |
+| 0:20 | 담당자 답을 analyst에 붙여 넣기 → COLLAB·명확도 갱신 | |
+| 0:30 | analyst: `$plan-gate` → 내가 PLAN 승인 | 범위 합의 |
+| 0:40 | dev: `$slice-implement` 1단계(기본판) | |
+| 1:30 | 터미널 2: analyst 종료(`/quit`) → `bin/reviewer` → `$verify-loop` | 기본판 동작 |
 | 1:30~2:20 | 단계 진행 + 숨은 요구 확인 + FAIL 수정 | |
 | 2:20 | `$risk-audit`, 서술형 예행연습 | 기능 동결 |
 | 2:40 | `$handoff` | 문서 마감 |
 | 2:50 | `$submit-check` → 웹 IDE에서 제출 | 제출 시작 |
 
 ## 세션 구성
-- 터미널 1: 메인 (구현, `src/`만)
-- 터미널 2: 검증 (`verify/`만, 기본판 이후)
-- 읽기 작업은 메인 안에서 "explorer 서브에이전트로 ○○ 요약해줘"
-- 나: Codex가 일하는 동안 담당자 문답, COLLAB·DECISIONS 기록
+- 터미널 1: `bin/dev` (구현, `src/`)
+- 터미널 2: `bin/analyst` (0:00~, `docs/`) → `bin/reviewer` (1:30~, `verify/`)
+- 동시에 열린 Codex는 최대 2개. 읽기 작업은 dev 안에서 "explorer 서브에이전트로 ○○ 요약해줘"
+- reviewer 지적은 dev에 붙여 넣는다 (dev는 검토 후 반영·반박)
+- 나: Codex가 일하는 동안 담당자 문답, 결정 승인
+- 역할 확인: 세션 첫 질문 "너의 역할과 쓸 수 있는 폴더를 한 줄로"
+
+## 사전 체험 확인 (1분)
+- `codex --version`
+- `bin/dev` 실행 → 역할 확인 질문에 dev라고 답하는지
+- 터미널 2개 동시 실행 시 RAM 표시
+- 처음 실행할 때 폴더 신뢰 여부를 물으면 허용 (`.codex/config.toml` 적용 조건)
 
 ## 프롬프트 카드
 1. **데이터 확인**: "데이터 파일마다 행 수, 컬럼, 결측·중복·이상값, 샘플 2개만 요약해줘. 파일 수정 금지."
