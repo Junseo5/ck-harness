@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 스모크 테스트: 프로젝트 유형을 감지해 테스트를 돌리고, URL을 주면 응답 코드를 확인한다.
-# 실행: bash scripts/smoke.sh [http://127.0.0.1:포트/경로 ...]
+# 실행: bash .harness/smoke.sh [http://127.0.0.1:포트/경로 ...]
 set -u
 FAIL=0
 

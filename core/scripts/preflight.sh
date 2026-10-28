@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 환경 점검: 런타임·패키지 도구·서버 바인딩·자원 상태를 한 번에 확인한다.
-# 실행: bash scripts/preflight.sh
+# 실행: bash .harness/preflight.sh
 set -u
 
 ver() {

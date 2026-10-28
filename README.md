@@ -48,14 +48,29 @@ core/                 # 대회와 무관한 공통 부분
   roles/              # dev · analyst · reviewer 역할 지시문
   skills/             # 7종 (Codex·Claude 공용 SKILL.md 형식)
   agents/codex|claude # 도구별 explorer 정의, Codex 설정
-  templates/          # docs/ 문서 템플릿, verify/ 검증 뼈대 (Python·Node)
-  scripts/            # preflight · smoke · run-role
+  templates/          # docs/ 문서 템플릿 4종, verify/ 검증 뼈대 (Python·Node 중 하나만 사용)
+  scripts/            # preflight · smoke · run-role → 설치 시 .harness/
 events/               # 대회별 부분
   cofa-probe/         # event.md (AGENTS.md에 붙음) + CARDS.md (사람용, 설치 안 됨)
   generic/            # 시간 비율 기준의 일반 과제
   _template/          # 새 대회용 빈 양식
 boot.sh
 ```
+
+## 설치 후 작업 폴더
+
+결과물과 작업 도구가 섞이지 않도록, 하네스는 아래만 남깁니다.
+
+```
+AGENTS.md            공통 규칙 + 이벤트 (Claude 설치 시 CLAUDE.md 추가)
+bin/                 dev · analyst · reviewer 실행
+docs/                PLAN · COLLAB · DECISIONS · VERIFY (+ HARNESS 출처)
+.harness/            역할 지시문, 점검·실행 스크립트, 검증 뼈대
+.agents/ .codex/     스킬, explorer, Codex 설정 (Claude는 .claude/)
+```
+
+인수인계는 별도 문서 없이 프로젝트 README에 쓰고, 검증 스크립트는 필요할 때 스택에 맞는 것 하나만 `verify/`에 만듭니다.
+제출 전 `$submit-check`가 쓰지 않은 파일과 빈 템플릿을 찾아 정리합니다.
 
 ## 새 대회에 쓰기
 

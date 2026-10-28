@@ -66,16 +66,16 @@ fi
 
 # 2. 도구 공통: 역할, 스크립트, 실행 스크립트, 문서 템플릿, 검증 뼈대
 copy_tree "$SRC/core/roles"            "$DEST/.harness/roles"
-copy_tree "$SRC/core/scripts"          "$DEST/scripts"
+copy_tree "$SRC/core/scripts"          "$DEST/.harness"
 copy_tree "$SRC/core/templates/docs"   "$DEST/docs"
-copy_tree "$SRC/core/templates/verify" "$DEST/verify"
+copy_tree "$SRC/core/templates/verify" "$DEST/.harness/templates"
 if use codex; then echo codex > .harness/tool; else echo claude > .harness/tool; fi
 mkdir -p bin
 for role in dev analyst reviewer; do
   [ -e "bin/$role" ] && { SKIPPED+=("bin/$role"); continue; }
-  printf '#!/usr/bin/env bash\n# %s 역할로 AI CLI 실행 (scripts/run-role.sh)\nexec bash "$(dirname "${BASH_SOURCE[0]}")/../scripts/run-role.sh" %s "$@"\n' "$role" "$role" > "bin/$role"
+  printf '#!/usr/bin/env bash\n# %s 역할로 AI CLI 실행 (.harness/run-role.sh)\nexec bash "$(dirname "${BASH_SOURCE[0]}")/../.harness/run-role.sh" %s "$@"\n' "$role" "$role" > "bin/$role"
 done
-chmod +x scripts/*.sh bin/* 2>/dev/null || true
+chmod +x .harness/*.sh bin/* 2>/dev/null || true
 
 # 3. 도구별 배치
 if use codex; then
@@ -125,7 +125,7 @@ git config user.name  >/dev/null 2>&1 || git config user.name  "candidate"
 git config user.email >/dev/null 2>&1 || git config user.email "candidate@localhost"
 
 PATHS=()
-for p in AGENTS.md CLAUDE.md .harness .agents .codex .claude scripts bin docs verify; do
+for p in AGENTS.md CLAUDE.md .harness .agents .codex .claude bin docs; do
   [ -e "$p" ] && PATHS+=("$p")
 done
 git add -- "${PATHS[@]}"
@@ -142,7 +142,7 @@ if [ "${#SKIPPED[@]}" -gt 0 ]; then
 fi
 
 # 8. 환경 점검
-bash scripts/preflight.sh || true
+bash .harness/preflight.sh || true
 
 if use codex; then P='$'; else P='/'; fi
 echo
