@@ -112,28 +112,34 @@ EOF
 CARDS="$SRC/events/$EVENT/CARDS.md"
 HAS_CARDS=0; [ -f "$CARDS" ] && HAS_CARDS=1
 
-# 6. 클론 폴더 정리 (작업 폴더 바로 아래의 .ck 일 때만)
-if [ "$(basename "$SRC")" = ".ck" ] && [ "$(dirname "$SRC")" = "$DEST" ]; then
-  rm -rf "$SRC"
-fi
-
-# 7. git 초기화와 커밋 (하네스 파일만)
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  git init -q
-fi
-git config user.name  >/dev/null 2>&1 || git config user.name  "candidate"
-git config user.email >/dev/null 2>&1 || git config user.email "candidate@localhost"
-
+# 6. git 커밋 (하네스 파일만). AI 샌드박스가 .git 쓰기를 막으면 실패할 수 있어 설치는 계속한다.
 PATHS=()
 for p in AGENTS.md CLAUDE.md .harness .agents .codex .claude bin docs; do
   [ -e "$p" ] && PATHS+=("$p")
 done
-git add -- "${PATHS[@]}"
-if git diff --cached --quiet; then
-  echo "[ck] 커밋할 변경이 없습니다."
-else
-  git commit -q -m "chore: 작업 하네스 적용 (ck $REV, $EVENT, $TOOL)"
-  echo "[ck] 커밋 완료: $(git log -1 --oneline)"
+MSG="chore: 작업 하네스 적용 (ck $REV, $EVENT, $TOOL)"
+commit_harness() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || git init -q || return 1
+  git config user.name  >/dev/null 2>&1 || git config user.name  "candidate" || return 1
+  git config user.email >/dev/null 2>&1 || git config user.email "candidate@localhost" || return 1
+  git add -- "${PATHS[@]}" || return 1
+  if git diff --cached --quiet; then
+    echo "[ck] 커밋할 변경이 없습니다."
+  else
+    git commit -q -m "$MSG" || return 1
+    echo "[ck] 커밋 완료: $(git log -1 --oneline)"
+  fi
+}
+COMMIT_OK=0
+commit_harness && COMMIT_OK=1
+if [ "$COMMIT_OK" = 0 ]; then
+  echo "[ck] 커밋하지 못했습니다(.git 쓰기가 막혔을 수 있음). 파일 설치는 끝났습니다."
+  echo "     권한을 받아 다시 실행하거나 터미널에서: git add ${PATHS[*]} && git commit -m \"$MSG\""
+fi
+
+# 7. 클론 폴더 정리 (작업 폴더 바로 아래의 .ck 일 때만)
+if [ "$(basename "$SRC")" = ".ck" ] && [ "$(dirname "$SRC")" = "$DEST" ]; then
+  rm -rf "$SRC"
 fi
 
 if [ "${#SKIPPED[@]}" -gt 0 ]; then
@@ -150,4 +156,7 @@ echo "[ck] 설치 끝 (이벤트: $EVENT, 도구: $TOOL)"
 echo "  터미널 1: bin/dev"
 echo "  터미널 2: bin/analyst → ${P}intake-interview  (기본판 이후 bin/reviewer → ${P}verify-loop)"
 [ "$HAS_CARDS" = 1 ] && echo "  사람용 카드: 저장소의 events/$EVENT/CARDS.md"
+echo
+echo "[ck] 중요: AGENTS.md와 스킬은 AI 세션이 시작될 때 읽힙니다."
+echo "     이미 켜져 있는 Codex라면 종료 후 다시 실행해야(또는 /new) 적용됩니다."
 exit 0
