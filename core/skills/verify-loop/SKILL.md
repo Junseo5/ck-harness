@@ -1,11 +1,11 @@
 ---
 name: verify-loop
-description: 기본판이 동작한 뒤 별도 검증 세션에서 실행한다. 구현 코드를 보지 않고 요구사항과 입력 데이터로 기대값을 독립 재계산해 결과와 비교하고 docs/VERIFY.md에 기록한다.
+description: 기본판이 동작한 뒤 실행한다(별도 세션이나 /new 직후가 좋다). 구현 코드를 보지 않고 요구사항과 입력 데이터로 기대값을 독립 재계산해 결과와 비교하고 docs/VERIFY.md에 기록한다.
 ---
 
 # verify-loop
 
-이 세션은 검증 전용이다. 쓸 수 있는 곳은 `verify/`와 `docs/VERIFY.md`뿐이다.
+검증 중에는 `verify/`와 `docs/VERIFY.md`에만 쓰고, `src/`는 고치지 않는다(고칠 것은 지적으로 남긴다).
 
 ## 1. 기준 확보
 - `docs/PLAN.md`의 성공 기준, `docs/COLLAB.md`의 판단 기준과 예외를 목록으로 뽑는다.
