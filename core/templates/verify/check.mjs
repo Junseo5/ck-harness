@@ -1,5 +1,5 @@
 // 독립 검증 뼈대: 원본 입력으로 기대값을 직접 계산해 결과물과 비교한다.
-// src/ 의 코드를 import 하지 않는다. 근거는 docs/PLAN.md, docs/COLLAB.md, 원본 데이터뿐.
+// 기대값은 src/ 코드와 따로 계산한다. 근거는 docs/PLAN.md, docs/COLLAB.md, 원본 데이터.
 // 실행: node verify/check.mjs
 import { readFileSync } from 'node:fs';
 
@@ -13,7 +13,7 @@ function check(name, expected, actual) {
 
 async function main() {
   // 1. 원본 입력 읽기 (예: JSON.parse(readFileSync('data/input.json', 'utf8')))
-  // 2. 결과물 읽기 (출력 파일 또는 await fetch('http://127.0.0.1:PORT/...'))
+  // 2. 결과물 얻기: child_process 로 프로그램을 다시 실행하거나 await fetch('http://127.0.0.1:PORT/...') (예전 출력 파일은 코드 변경을 놓친다)
   // 3. 항목별 비교
   // check('개수 대사', rows.length, included + excluded + review);
 }

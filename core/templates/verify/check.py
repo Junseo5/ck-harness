@@ -1,6 +1,6 @@
 """독립 검증 뼈대: 원본 입력으로 기대값을 직접 계산해 결과물과 비교한다.
 
-src/ 의 코드를 import 하지 않는다. 근거는 docs/PLAN.md, docs/COLLAB.md, 원본 데이터뿐.
+기대값은 src/ 코드와 따로 계산한다. 근거는 docs/PLAN.md, docs/COLLAB.md, 원본 데이터.
 실행: python3 verify/check.py
 """
 import sys
@@ -16,7 +16,7 @@ def check(name, expected, actual):
 
 def main():
     # 1. 원본 입력 읽기 (예: csv.DictReader, json.load)
-    # 2. 결과물 읽기 (출력 파일 또는 urllib.request 로 API 호출)
+    # 2. 결과물 얻기: 프로그램을 subprocess 로 다시 실행하거나 urllib.request 로 API 호출 (예전 출력 파일은 코드 변경을 놓친다)
     # 3. 항목별 비교
     # check("개수 대사", len(rows), included + excluded + review)
     pass

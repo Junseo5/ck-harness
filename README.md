@@ -39,7 +39,7 @@ AGENTS.md   bin/   docs/   .harness/   .agents/   .codex/
 - 끝나면 받아 온 `.ck` 폴더를 지우고, 출처(저장소·커밋)를 `docs/HARNESS.md`에 남깁니다.
 - 과제 해답, 도메인 로직, 앱 코드는 들어 있지 않습니다. 결과물은 작업 중에 만듭니다.
 
-옵션 없이 실행하면 `-e cofa-probe -t codex`와 같습니다.
+옵션 없이 실행하면 `-e cofa-probe -t codex`와 같습니다. Cofa-Probe는 Codex만 허용되므로 옵션 없이 쓰면 됩니다.
 
 | 옵션 | 값 | 설명 |
 |---|---|---|
@@ -87,7 +87,7 @@ docs/             PLAN · COLLAB · DECISIONS · VERIFY 양식, HARNESS(출처)
 .codex/           explorer 서브에이전트, Codex 설정
 ```
 
-인수인계는 별도 문서 없이 프로젝트 README에 씁니다. 검증 스크립트는 필요할 때 스택에 맞는 것 하나만 `verify/`에 만듭니다.
+과제 문서가 계획 문서·협업 기록의 이름이나 위치를 정하면 그것을 쓰고, `docs/` 양식은 내용 참고용으로 둡니다. 인수인계는 별도 문서 없이 프로젝트 README에 씁니다. 검증 스크립트는 필요할 때 스택에 맞는 것 하나만 `verify/`에 만듭니다.
 
 ## 저장소 구조
 
