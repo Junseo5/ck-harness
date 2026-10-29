@@ -20,11 +20,17 @@
 ## 세션 구성
 - 터미널 1: `bin/dev` (구현, `src/`)
 - 터미널 2: `bin/analyst` (0:00~, `docs/`) → `bin/reviewer` (1:30~, `verify/`)
-- 동시에 열린 Codex는 최대 2개. 읽기 작업은 dev 안에서 "explorer 서브에이전트로 ○○ 요약해줘"
+- 세션 수 제한은 없지만 오른쪽 위 RAM을 본다. 읽기 작업은 dev 안에서 "explorer 서브에이전트로 ○○ 요약해줘"
 - reviewer 지적은 dev에 붙여 넣는다 (dev는 검토 후 반영·반박)
 - 나: Codex가 일하는 동안 담당자 문답, 결정 승인
 - AI 제안을 내가 바꾸면 analyst에 "DECISIONS에 기록: <AI 제안> → <바꾼 내용>, 이유 <한 줄>"
 - 역할 확인: 세션 첫 질문 "너의 역할과 쓸 수 있는 폴더를 한 줄로"
+
+## 세션을 하나만 쓸 때
+- `codex`를 그냥 켠다(`bin/dev`로 켜지 않는다). 역할 지시가 없으면 한 세션이 세 역할과 모든 문서를 맡는다.
+- 순서는 같다: `$intake-interview` → `$plan-gate` → `$slice-implement` → `$verify-loop` → `$risk-audit` → `$handoff` → `$submit-check`
+- 대화가 길어지면 `/new`. 합의와 진행은 docs/에 있으니 "docs/PLAN.md 읽고 N단계부터"로 이어 간다.
+- 검증은 `/new` 뒤에 `$verify-loop` (구현 대화를 모르는 상태에서 하는 편이 독립적이다)
 
 ## 사전 체험 확인 (1분)
 - `codex --version`
