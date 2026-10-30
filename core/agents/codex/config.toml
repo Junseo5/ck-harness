@@ -1,6 +1,0 @@
-# 프로젝트 Codex 설정 (모델은 당일 /model 로 직접 고른다)
-
-[agents]
-# 동시에 열 수 있는 서브에이전트 수 (메인 세션 제외). 토큰·RAM 절약용.
-# 구버전에서 이 키를 모르면 레거시 이름 max_threads 로 바꾼다.
-max_concurrent_threads_per_session = 2
